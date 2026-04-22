@@ -1,14 +1,19 @@
-slint::include_modules!();
+use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
+use cpal::{SampleFormat, SampleRate, StreamConfig};
+use slint::{ComponentHandle, Model};
 
-mod audio; 
+mod audio;
+mod ui;
 
-fn main() -> Result<(), slint:PlatformError> {
-    let ui = AppWindow::new()?;
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Initialize audio input
+    let _audio_stream = audio::setup_audio()?;
 
-    // Audio engine in a separate thread
-    std::thread::spawn(|| {
-        audio::start_audio_engine().expect("Failed to start audio engine");
-    });
+    // Initialize UI
+    let ui = ui::MainWindow::new();
 
-    ui.run()
+    // Start UI event loop
+    ui.run()?;
+
+    Ok(())
 }
