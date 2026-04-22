@@ -1,0 +1,15 @@
+# Build artifacts
+/target/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Large data/logs
+*.log
